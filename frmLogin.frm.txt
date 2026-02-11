@@ -1,0 +1,31 @@
+Private Sub UserForm_Initialize()
+    cmbRole.AddItem "Admin"
+    cmbRole.AddItem "User"
+    txtPassword.PasswordChar = "*"
+End Sub
+
+Private Sub btnLogin_Click()
+
+    If txtUsername.Value = "" Or txtPassword.Value = "" Or cmbRole.Value = "" Then
+        MsgBox "All fields are mandatory!", vbExclamation
+        Exit Sub
+    End If
+
+    If txtUsername.Value = "admin" And txtPassword.Value = "123" And cmbRole.Value = "Admin" Then
+        
+        CurrentRole = "Admin"
+        Sheets("Dashboard").Activate
+        Unload Me
+        
+    ElseIf txtUsername.Value = "user" And txtPassword.Value = "123" And cmbRole.Value = "User" Then
+        
+        CurrentRole = "User"
+        Sheets("Maintenance").Visible = xlSheetVeryHidden
+        Sheets("Dashboard").Activate
+        Unload Me
+        
+    Else
+        MsgBox "Invalid Credentials!", vbCritical
+    End If
+
+End Sub
